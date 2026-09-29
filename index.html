@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>魚仔美甲 預約資料</title>
+<style>
+:root{--bg:#fff8fa;--card:#fff;--tx:#2b2226;--mu:#8a7880;--ac:#e0568a;--ac2:#fde4ee;--bd:#ead6de;--dis:#e6e0e3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1619;--card:#2a2226;--tx:#f5eaee;--mu:#b39ba5;--ac:#ff7fae;--ac2:#4a2a37;--bd:#43353b;--dis:#3a3236}}
+:root[data-theme="dark"]{--bg:#1c1619;--card:#2a2226;--tx:#f5eaee;--mu:#b39ba5;--ac:#ff7fae;--ac2:#4a2a37;--bd:#43353b;--dis:#3a3236}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.5}
+main{max-width:640px;margin:0 auto;padding:16px}
+h1{text-align:center;margin:8px 0 0;font-size:24px;letter-spacing:.1em}
+.sub{text-align:center;color:var(--mu);margin:0 0 16px;font-size:13px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+h2{font-size:17px;margin:0 0 4px}
+.hint{color:var(--mu);font-size:12.5px;margin:0 0 10px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center}
+button,select,input,textarea{font:inherit;color:var(--tx)}
+.opt{background:var(--card);border:2px solid var(--tx);border-radius:10px;padding:8px 14px;cursor:pointer}
+.opt.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.opt small{opacity:.75}
+select,input[type=text],input[type=number],textarea{background:var(--card);border:1.5px solid var(--bd);border-radius:10px;padding:8px 10px;width:auto}
+textarea,.full{width:100%}
+[hidden]{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px}
+.dow{text-align:center;font-size:12px;color:var(--mu)}
+.day{border:1px solid var(--bd);border-radius:8px;padding:3px 2px;text-align:center;min-height:92px}
+.day.empty{border:none}
+.day b{font-size:12px;display:block;margin-bottom:2px}
+.slot{display:block;width:100%;margin:2px 0;padding:3px 0;font-size:10px;border:1px solid var(--bd);border-radius:5px;background:var(--card);cursor:pointer}
+.slot.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.slot:disabled{background:var(--dis);color:var(--mu);cursor:not-allowed;text-decoration:line-through}
+.chips{margin-top:8px;font-size:13px;color:var(--ac)}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.svc .opt{display:flex;justify-content:space-between;gap:4px;font-size:14px;padding:8px 10px}
+.sec{font-size:13px;text-decoration:underline;margin:12px 0 6px}
+.box{border:1.5px dashed var(--ac);border-radius:12px;padding:12px;margin-top:10px;background:var(--ac2)}
+.box label{display:block;font-size:13px;margin-top:8px}
+.go{width:100%;border:none;border-radius:999px;padding:14px;background:#5ce1e6;color:#111;font-weight:700;font-size:16px;cursor:pointer;margin-top:4px}
+.err{color:#d33;font-size:13px;margin-top:8px}
+pre{white-space:pre-wrap;font:inherit;background:var(--ac2);border-radius:12px;padding:12px;margin:8px 0}
+.send{display:block;text-align:center;background:#06c755;color:#fff;border:none;border-radius:999px;padding:14px;font-weight:700;width:100%;font-size:16px;cursor:pointer}
+.sec2{background:none;border:1.5px solid var(--bd);border-radius:999px;padding:10px;width:100%;margin-top:8px;cursor:pointer}
+</style>
+</head>
+<body>
+<main>
+<h1>魚仔美甲</h1>
+<p class="sub">Fry Nails・預約資料</p>
+
+<section>
+<h2>1. 時段</h2>
+<p class="hint">可複選；灰色劃線為不可選時段</p>
+<select id="month" aria-label="月份"><option value="10">10 月</option><option value="11">11 月</option><option value="12">12 月</option></select>
+<div class="grid" id="cal"></div>
+<div class="chips" id="chips"></div>
+</section>
+
+<section>
+<h2>2. 卸甲</h2>
+<div class="row" id="g-rem"></div>
+<div class="box" id="remBox" hidden>
+<label>卸甲指數 <select id="remN"></select></label>
+<label><input type="checkbox" id="remX"> 需卸大鑽、飾品、立體造型</label>
+</div>
+</section>
+
+<section>
+<h2>3. 延甲、塑型</h2>
+<div class="row" id="g-ext"></div>
+<div class="box" id="extBox" hidden>
+<label>延甲指數 <select id="extN"></select></label>
+<div class="row" id="g-shape"></div>
+</div>
+</section>
+
+<section>
+<h2>4. 款式</h2>
+<p class="hint">可複選，若有參考圖，送出後在 LINE 傳給我哟！</p>
+<div class="sec">美甲服務</div>
+<div class="svc" id="svcA"></div>
+<div class="sec">其他服務</div>
+<div class="svc" id="svcB"></div>
+<div class="box" id="freeBox" hidden>
+<label>預算（需 $950 以上，只能輸入數字）<input class="full" type="number" id="budget" inputmode="numeric" min="950" placeholder="請輸入一個預算數字，需$950以上"></label>
+<label>風格 <input class="full" type="text" id="style" placeholder="請輸入風格"></label>
+<label>色系 <input class="full" type="text" id="color" placeholder="請輸入色系"></label>
+</div>
+</section>
+
+<section>
+<h2>5. 配合拍攝、同意發布於魚仔社群平台</h2>
+<p class="hint">可享 $50 優惠</p>
+<div class="row" id="g-shoot"></div>
+</section>
+
+<section>
+<h2>6. 年齡</h2>
+<p class="hint">高中生需附上家長許可；國中、國小生需要家長全程陪同</p>
+<div class="row" id="g-age"></div>
+</section>
+
+<section>
+<h2>7. 備註</h2>
+<p class="hint">選填，沒有可以不用寫</p>
+<textarea id="note" rows="4" placeholder="例如：想要可愛一點的貼紙"></textarea>
+</section>
+
+<button class="go" id="confirm">確認預約資料</button>
+<div class="err" id="err"></div>
+
+<section id="review" hidden style="margin-top:14px">
+<h2>請確認預約內容</h2>
+<pre id="msg"></pre>
+<button class="send" id="send">送出（開啟 LINE 傳送）</button>
+<button class="sec2" id="copy">複製內容（LINE 沒有開啟時使用）</button>
+<button class="sec2" id="back">返回修改</button>
+</section>
+</main>
+
+<script src="config.js"></script>
+<script>
+const TIMES=["09:00","13:30","18:00"];
+const S={slots:new Set(),rem:null,ext:null,shape:null,shoot:null,age:null,svc:new Set()};
+const $=id=>document.getElementById(id);
+const p2=n=>String(n).padStart(2,"0");
+
+/* fingers dropdowns */
+["remN","extN"].forEach(id=>{for(let i=10;i>=1;i--)$(id).add(new Option(i+" 指",i))});
+
+/* single-choice groups */
+function group(id,key,opts,cb){
+  const el=$(id);
+  opts.forEach(([v,t])=>{
+    const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=t;
+    b.onclick=()=>{S[key]=v;[...el.children].forEach(c=>c.classList.toggle("on",c===b));cb&&cb()};
+    el.appendChild(b);
+  });
+}
+group("g-rem","rem",[["yes","卸甲"],["no","不卸甲"]],()=>{$("remBox").hidden=S.rem!=="yes"});
+group("g-ext","ext",[["yes","延甲"],["no","不延甲"]],()=>{$("extBox").hidden=S.ext!=="yes"});
+group("g-shape","shape",[["yes","塑型"],["no","不塑型"]]);
+group("g-shoot","shoot",[["是","是"],["否","否"]]);
+group("g-age","age",[["已成年","已成年"],["未成年（高中生）","高中生"],["未成年（國中、小生）","國中、小生"]]);
+
+/* services */
+const A=[["基礎保養","$350"],["漸層","$800"],["透明凝膠","$500"],["漸層跳色","$850"],["單色","$600"],["腮紅","$850"],["單色跳色","$650"],["漸層貓眼","$850"],["貓眼","$700"],["腮紅貓眼","$900"],["貓眼跳色","$750"],["鏡面","$950"],["璀璨","$700"],["不指定法式","$950"],["璀璨跳色","$750"],["指定造型款","$950up"],["不指定造型款","$950up"],["半鑽","$50/指"],["滿鑽","$100/指"],["貼紙","$50"]];
+const B=[["斷甲補甲","$50/指"],["厚建構","$150"]];
+function svc(id,list){
+  list.forEach(([n,pr])=>{
+    const b=document.createElement("button");b.type="button";b.className="opt";
+    b.innerHTML=`<span>${n}</span><small>${pr}</small>`;
+    b.onclick=()=>{S.svc.has(n)?S.svc.delete(n):S.svc.add(n);b.classList.toggle("on");$("freeBox").hidden=!S.svc.has("不指定造型款")};
+    $(id).appendChild(b);
+  });
+}
+svc("svcA",A);svc("svcB",B);
+
+/* calendar */
+function render(){
+  const m=+$("month").value,first=new Date(YEAR,m-1,1).getDay(),days=new Date(YEAR,m,0).getDate();
+  const g=$("cal");g.innerHTML="";
+  "日一二三四五六".split("").forEach(d=>{const e=document.createElement("div");e.className="dow";e.textContent=d;g.appendChild(e)});
+  for(let i=0;i<first;i++){const e=document.createElement("div");e.className="day empty";g.appendChild(e)}
+  for(let d=1;d<=days;d++){
+    const c=document.createElement("div");c.className="day";c.innerHTML=`<b>${d}</b>`;
+    TIMES.forEach(t=>{
+      const k=`${p2(m)}-${p2(d)} ${t}`,b=document.createElement("button");
+      b.type="button";b.className="slot"+(S.slots.has(k)?" on":"");b.textContent=t;
+      if(LOCKED.has(k)){b.disabled=true;b.title="不可選"}
+      b.onclick=()=>{S.slots.has(k)?S.slots.delete(k):S.slots.add(k);b.classList.toggle("on");chips()};
+      c.appendChild(b);
+    });
+    g.appendChild(c);
+  }
+  chips();
+}
+const fmt=k=>k.replace("-","/");
+function sorted(){return [...S.slots].sort()}
+function chips(){const s=sorted();$("chips").textContent=s.length?"已選："+s.map(fmt).join("、"):""}
+$("month").onchange=render;render();
+
+/* build message */
+function build(){
+  const e=[];
+  if(!S.slots.size)e.push("請至少選擇一個時段");
+  if(!S.rem)e.push("請選擇是否卸甲");
+  if(!S.ext)e.push("請選擇是否延甲");
+  if(S.ext==="yes"&&!S.shape)e.push("請選擇是否塑型");
+  if(!S.svc.size)e.push("請至少選擇一個款式");
+  const budget=$("budget").value.trim(),st=$("style").value.trim(),co=$("color").value.trim();
+  if(S.svc.has("不指定造型款")){
+    if(!budget||+budget<950)e.push("預算請輸入 $950 以上的數字");
+    if(!st)e.push("請輸入風格");
+    if(!co)e.push("請輸入色系");
+  }
+  if(!S.shoot)e.push("請選擇是否配合拍攝");
+  if(!S.age)e.push("請選擇年齡身分");
+  if(e.length)return {e};
+  let rem=S.rem==="yes"?`要卸甲（${$("remN").value}指）`+($("remX").checked?"，需卸大鑽、飾品、立體造型":""):"不卸甲";
+  let ext=S.ext==="yes"?`要延甲（${$("extN").value}指）`:"不延甲";
+  const L=["1. "+sorted().map(fmt).join("、"),"2. "+rem,"3.1. "+ext];
+  if(S.ext==="yes")L.push("3.2. "+(S.shape==="yes"?"要塑型":"不塑型"));
+  const items=[...S.svc].map(n=>n==="不指定造型款"?`不指定造型款（預算$${budget}／風格：${st}／色系：${co}）`:n);
+  L.push("4. "+items.join("、"),"5. "+S.shoot,"6. "+S.age);
+  const note=$("note").value.trim();
+  if(note)L.push("備註："+note);
+  return {text:L.join("\n")};
+}
+let TEXT="";
+$("confirm").onclick=()=>{
+  const r=build();
+  if(r.e){$("err").innerHTML=r.e.join("<br>");$("review").hidden=true;return}
+  $("err").textContent="";TEXT=r.text;$("msg").textContent=TEXT;$("review").hidden=false;
+  $("review").scrollIntoView({behavior:"smooth"});
+};
+$("send").onclick=()=>{location.href=`https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(TEXT)}`};
+$("copy").onclick=async()=>{try{await navigator.clipboard.writeText(TEXT);$("copy").textContent="已複製 ✓"}catch(x){$("copy").textContent="請長按上方內容手動複製"}};
+$("back").onclick=()=>{$("review").hidden=true;window.scrollTo({top:0,behavior:"smooth"})};
+</script>
+</body>
+</html>
