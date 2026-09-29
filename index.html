@@ -123,7 +123,7 @@ pre{white-space:pre-wrap;font:inherit;background:var(--ac2);border-radius:12px;p
 </section>
 </main>
 
-<script src="config.js"></script>
+<script>document.write('<script src="config.js?t='+Date.now()+'"><\/script>')</script>
 <script>
 const TIMES=["09:00","13:30","18:00"];
 const S={slots:new Set(),rem:null,ext:null,shape:null,shoot:null,age:null,svc:new Set()};
