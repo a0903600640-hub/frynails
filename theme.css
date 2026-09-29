@@ -1,6 +1,6 @@
 html:root:not(.a):not(.b){--card:#81A4C0;--tx:#33414D;--mu:#FFFFFF;--ac:#FFF998;--ac2:rgba(255,255,255,.3);--bd:rgba(255,255,255,.6);--dis:rgba(51,65,77,.3)}
 body{background:#eaf0f6}
-body::before{content:"";position:fixed;inset:0;background:url(IMG_0006.jpeg) center/cover no-repeat;z-index:-1}
+body::before{content:"";position:fixed;inset:0;background:url(IMG_0006.jpg) center/cover no-repeat;z-index:-1}
 h1,h2{color:#33414D}
 .sub{color:#FFFFFF;text-shadow:0 1px 4px rgba(51,65,77,.7)}
 .hint,.dow{color:#FFFFFF}
