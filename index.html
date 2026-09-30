@@ -46,7 +46,7 @@ pre{white-space:pre-wrap;font:inherit;background:var(--ac2);border-radius:12px;p
 .send{display:block;text-align:center;background:#06c755;color:#fff;border:none;border-radius:999px;padding:14px;font-weight:700;width:100%;font-size:16px;cursor:pointer}
 .sec2{background:none;border:1.5px solid var(--bd);border-radius:999px;padding:10px;width:100%;margin-top:8px;cursor:pointer}
 </style>
-     <link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <main>
@@ -129,6 +129,12 @@ const TIMES=["09:00","13:30","18:00"];
 const S={slots:new Set(),rem:null,ext:null,shape:null,shoot:null,age:null,svc:new Set()};
 const $=id=>document.getElementById(id);
 const p2=n=>String(n).padStart(2,"0");
+const LOCKED=new Set();
+String(LOCKED_TEXT).normalize("NFKC").split("\n").forEach(l=>{
+  if(/^\s*(#|\/\/)/.test(l))return;
+  const m=l.match(/(\d{1,2})\D+(\d{1,2})\D+(\d{1,2})\D*(\d{2})/);
+  if(m)LOCKED.add(`${p2(m[1])}-${p2(m[2])} ${p2(m[3])}:${m[4]}`);
+});
 
 /* fingers dropdowns */
 ["remN","extN"].forEach(id=>{for(let i=10;i>=1;i--)$(id).add(new Option(i+" 指",i))});
