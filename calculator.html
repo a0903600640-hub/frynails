@@ -40,24 +40,26 @@ select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--bd);back
 <div class="card"><h2>其他服務</h2><div id="other"></div></div>
 
 <div class="card"><h2>卸甲服務</h2>
-<label class="row"><span class="l"><input type="radio" name="rm" value="none" checked><span>不卸甲</span></span><span class="p"></span></label><label class="row"><span class="l"><input type="radio" name="rm" value="150"><span>本店、續作</span></span><span class="p">150</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="300"><span>本店、不續做</span></span><span class="p">300</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="250"><span>他店、續作</span></span><span class="p">250</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="400"><span>他店、不續做</span></span><span class="p">400</span></label>
+<label class="row"><span class="l"><input type="radio" name="rm" value="none" checked><span>不卸甲</span></span><span class="p"></span></label><label class="row"><span class="l"><input type="radio" name="rm" value="150"><span>本店、續作</span></span><span class="p">150</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="300"><span>本店、不續做</span></span><span class="p">300</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="200"><span>他店、續作</span></span><span class="p">200</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="400"><span>他店、不續做</span></span><span class="p">400</span></label>
 <div class="row" style="cursor:default"><span>卸大鑽、飾品、立體造型<small>75 / 手</small></span>
 <div class="step"><button onclick="hand(-1)">−</button><em id="hc">0</em><button onclick="hand(1)">+</button></div></div></div>
 
 <div class="card"><h2>優惠</h2>
 <label class="row"><span class="l"><input type="checkbox" id="w3"><span>三週內換甲免卸甲費</span></span><span class="p">免卸甲費</span></label>
+<label class="row"><span class="l"><input type="checkbox" id="bday"><span>當月壽星優惠</span></span><span class="p">九折</span></label>
+<label class="row"><span class="l"><input type="checkbox" id="ref"><span>介紹費</span></span><span class="p">−50</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="pic"><span>配合拍攝作品並同意發布於魚仔社群<small>即可享有優惠</small></span></span><span class="p">−50</span></label></div>
 
 <div class="card sum"><h2>明細</h2><div id="sum"></div></div>
 <div class="note">依價目表試算,實際金額以店家報價為準。「up」項目為起算價。</div>
 </div>
 <script>
-const STYLES=[["基礎保養",350],["透明凝膠",500],["單色",600,1],["貓眼、璀璨",700,1],["漸層",800,1],["腮紅、漸層貓眼",850],["腮紅貓眼",900],["鏡面(不指定法式)",950],["指定造型款",950,0,"起"],["不指定造型款",950,0,"起","可選色系、風格、預算"]];
+const STYLES=[["基礎保養",300],["透明凝膠",500],["單色",600,1],["貓眼、璀璨",650,1],["漸層",700,1],["腮紅、漸層貓眼",750],["腮紅貓眼",800],["鏡面、法式",850],["指定造型款",750,0,"起"],["不指定造型款",750,0,"起","可選色系、風格、預算"]];
 const DECO=[["半鑽",50],["滿鑽",100]];
-const OTHER=[["斷甲補甲",50],["延甲",75],["塑形",25]];
+const OTHER=[["斷甲補甲",35],["甲片延甲",65],["凝膠延甲",75],["塑形",25]];
 let F=10,H=0,X={8:0,9:0},q={},style=-1;
 const $=id=>document.getElementById(id);
-$("styles").innerHTML=STYLES.map((s,i)=>`<label class="row"><span class="l"><input type="radio" name="st" value="${i}"><span>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span></span>${s[3]?`<div class="step"><button type="button" onclick="up(${i},-1)">−</button><em id="ux${i}" style="min-width:52px;font-weight:700">950</em><button type="button" onclick="up(${i},1)">+</button></div>`:`<span class="p">${s[1]}</span>`}</label>`).join("");
+$("styles").innerHTML=STYLES.map((s,i)=>`<label class="row"><span class="l"><input type="radio" name="st" value="${i}"><span>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span></span>${s[3]?`<div class="step"><button type="button" onclick="up(${i},-1)">−</button><em id="ux${i}" style="min-width:52px;font-weight:700">${s[1]}</em><button type="button" onclick="up(${i},1)">+</button></div>`:`<span class="p">${s[1]}</span>`}</label>`).join("");
 const stepper=(a,k)=>a.map((x,i)=>`<div class="row" style="cursor:default"><span>${x[0]}<small>${x[1]} / 指</small></span><div class="step"><button onclick="qty('${k}${i}',-1)">−</button><em id="q${k}${i}">0</em><button onclick="qty('${k}${i}',1)">+</button><button class="all" onclick="qty('${k}${i}',99)">全指</button></div></div>`).join("");
 $("deco").innerHTML=stepper(DECO,"d")+`<label class="row"><span class="l"><input type="checkbox" id="stk"><span>貼紙不限量</span></span><span class="p">50</span></label>`;
 $("other").innerHTML=stepper(OTHER,"o")+`<label class="row"><span class="l"><input type="checkbox" id="thick"><span>厚建構</span></span><span class="p">150</span></label>`;
@@ -74,7 +76,7 @@ function calc(){
  const si=document.querySelector('input[name=st]:checked');style=si?+si.value:-1;
  const S=STYLES[style];
  $("jumpRow").style.opacity=S&&S[2]?1:.4;
- for(const i in X)$("ux"+i).textContent=950+X[i];
+ for(const i in X)$("ux"+i).textContent=STYLES[i][1]+X[i];
  if(S){add(S[0]+(S[3]?"(起)":""),S[1]);if(S[2]&&$("jump").checked)add("跳色不限量",50);if(S[3])add("款式加價",X[style])}
  DECO.forEach((x,i)=>{const n=q["d"+i]||0;$("qd"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
  if($("stk").checked)add("貼紙不限量",50);
@@ -84,6 +86,8 @@ function calc(){
  if(rm!="none"){const nm=document.querySelector('input[name=rm]:checked').parentNode.textContent.trim();
   if($("w3").checked)L.push(["卸甲費(三週內免)",0]);else add("卸甲 "+nm,+rm)}
  $("hc").textContent=H;add(`卸大鑽/飾品/立體 × ${H}手`,H*75);
+ if($("bday").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("當月壽星九折",-Math.round(sub*0.1))}
+ if($("ref").checked)add("介紹費",-50);
  if($("pic").checked)add("拍攝發布優惠",-50);
  const t=Math.max(0,L.reduce((a,b)=>a+b[1],0));
  $("tot").textContent=t.toLocaleString();
