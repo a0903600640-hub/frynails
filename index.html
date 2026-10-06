@@ -53,6 +53,7 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 .lbx{color:#fff;text-align:center;font-size:13px;margin-bottom:8px}
 .prow{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.7);font-size:14px}
 .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;font-size:17px;font-weight:700}
+.warn{background:#FFF998;color:#33414D;font-weight:700;font-size:13.5px;line-height:1.5;border:1.5px solid #33414D;border-radius:10px;padding:8px 10px;margin-top:10px}
 #priceTotal{font-size:26px}
 </style>
 </head>
@@ -132,9 +133,10 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 
 <section id="priceSec">
 <h2>價格試算</h2>
-<p class="hint">依你目前選的項目自動計算，實際金額以現場為準；不含卸甲費用</p>
+<p class="hint">依你目前選的項目自動計算，實際金額以現場為準</p>
 <div id="priceRows"></div>
 <div class="total"><span>預估總額</span><b id="priceTotal">$0</b></div>
+<div class="warn">⚠️ 此價格「尚未」包含卸甲費用（卸甲、卸大鑽、飾品、立體造型另計）</div>
 </section>
 <button class="go" id="confirm">確認預約資料</button>
 <div class="err" id="err"></div>
