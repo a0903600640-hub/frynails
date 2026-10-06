@@ -51,6 +51,9 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 #lb{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,28,36,.9);z-index:50;overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 10px) 10px 20px;cursor:zoom-out}
 #lb img{width:100%;max-width:900px;display:block;margin:0 auto;border-radius:8px}
 .lbx{color:#fff;text-align:center;font-size:13px;margin-bottom:8px}
+.prow{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.7);font-size:14px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;font-size:17px;font-weight:700}
+#priceTotal{font-size:26px}
 </style>
 </head>
 <body>
@@ -60,7 +63,7 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 
 <section>
 <h2>1. 時段</h2>
-<p class="hint">可複選；灰色劃線為不可選時段</p>
+<p class="hint">可複選，請選2-3個時間段；灰色劃線為不可選時段</p>
 <select id="month" aria-label="月份"><option value="10">10 月</option><option value="11">11 月</option><option value="12">12 月</option></select>
 <div class="grid" id="cal"></div>
 <div class="chips" id="chips"></div>
@@ -101,6 +104,7 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 <div class="svc" id="svcA"></div>
 <div class="sec">其他服務</div>
 <div class="svc" id="svcB"></div>
+<div class="box" id="repairBox" hidden><label>斷甲補甲指數 <select id="repairN"></select></label></div>
 <div class="box" id="freeBox" hidden>
 <label>預算（需 $750 以上，只能輸入數字）<input class="full" type="number" id="budget" inputmode="numeric" min="750" placeholder="請輸入一個預算數字，需$750以上"></label>
 <label>風格 <input class="full" type="text" id="style" placeholder="請輸入風格"></label>
@@ -126,6 +130,12 @@ pre{white-space:pre-wrap;font:inherit;background:rgba(255,255,255,.35);border-ra
 <textarea id="note" rows="4" placeholder="例如：想要可愛一點的貼紙"></textarea>
 </section>
 
+<section id="priceSec">
+<h2>價格試算</h2>
+<p class="hint">依你目前選的項目自動計算，實際金額以現場為準；不含卸甲費用</p>
+<div id="priceRows"></div>
+<div class="total"><span>預估總額</span><b id="priceTotal">$0</b></div>
+</section>
 <button class="go" id="confirm">確認預約資料</button>
 <div class="err" id="err"></div>
 
@@ -180,7 +190,7 @@ function svc(id,list){
   list.forEach(([n,pr])=>{
     const b=document.createElement("button");b.type="button";b.className="opt";
     b.innerHTML=`<span>${n}</span><small>${pr}</small>`;
-    b.onclick=()=>{S.svc.has(n)?S.svc.delete(n):S.svc.add(n);b.classList.toggle("on");$("freeBox").hidden=!S.svc.has("不指定造型款")};
+    b.onclick=()=>{S.svc.has(n)?S.svc.delete(n):S.svc.add(n);b.classList.toggle("on");$("freeBox").hidden=!S.svc.has("不指定造型款");$("repairBox").hidden=!S.svc.has("斷甲補甲")};
     $(id).appendChild(b);
   });
 }
@@ -232,7 +242,7 @@ function build(){
   let ext=S.ext==="yes"?`要延甲（${S.extType}，${$("extN").value}指）`:"不延甲";
   const L=["1. "+sorted().map(fmt).join("、"),"2. "+rem,"3.1. "+ext];
   if(S.ext==="yes")L.push("3.2. "+(S.shape==="yes"?"要塑型":"不塑型"));
-  const items=[...S.svc].map(n=>n==="不指定造型款"?`不指定造型款（預算$${budget}／風格：${st}／色系：${co}）`:n);
+  const items=[...S.svc].map(n=>n==="斷甲補甲"?`斷甲補甲（${$("repairN").value}指）`:n==="不指定造型款"?`不指定造型款（預算$${budget}／風格：${st}／色系：${co}）`:n);
   L.push("4. "+items.join("、"),"5. "+S.shoot,"6. "+S.age);
   const note=$("note").value.trim();
   if(note)L.push("備註："+note);
@@ -248,6 +258,37 @@ $("confirm").onclick=()=>{
 $("send").onclick=()=>{location.href=`https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(TEXT)}`};
 $("copy").onclick=async()=>{try{await navigator.clipboard.writeText(TEXT);$("copy").textContent="已複製 ✓"}catch(x){$("copy").textContent="請長按上方內容手動複製"}};
 $("back").onclick=()=>{$("review").hidden=true;window.scrollTo({top:0,behavior:"smooth"})};
+
+/* repair fingers + price calculation */
+for(let i=1;i<=10;i++)$("repairN").add(new Option(i+" 指",i));
+const PRICE={"基礎保養":300,"漸層":700,"透明凝膠":500,"漸層跳色":750,"單色":600,"腮紅":750,"單色跳色":650,"漸層貓眼":750,"貓眼":650,"腮紅貓眼":800,"貓眼跳色":700,"鏡面":850,"璀璨":650,"不指定法式":850,"璀璨跳色":700,"指定造型款":750,"半鑽":50,"滿鑽":100,"貼紙":50,"厚建構":150};
+const UPSET=new Set(["指定造型款","半鑽","滿鑽"]);
+function calc(){
+  const rows=[];let total=0,up=false;
+  const add=(label,shown,amt)=>{rows.push([label,shown]);total+=amt};
+  const nameA=new Set(A.map(x=>x[0]));
+  const onlyBasic=S.rem==="yes"&&[...S.svc].filter(n=>nameA.has(n)).join()==="基礎保養";
+  S.svc.forEach(n=>{
+    if(n==="斷甲補甲"){const k=+$("repairN").value||1;add(`斷甲補甲 ${k}指 × $35`,`$${35*k}`,35*k)}
+    else if(n==="不指定造型款"){const b=+$("budget").value||0;add("不指定造型款（客人預算）",b?`$${b}`:"請先輸入預算",b)}
+    else if(n==="基礎保養"&&onlyBasic)add("基礎保養（卸甲優惠 -$100）","$200",200);
+    else if(UPSET.has(n)){up=true;add(n,`$${PRICE[n]}up`,PRICE[n])}
+    else add(n,`$${PRICE[n]}`,PRICE[n]);
+  });
+  if(S.ext==="yes"&&S.etype){
+    const k=+$("extN").value||1,u=S.etype==="甲片延甲"?65:75;
+    add(`${S.etype} ${k}指 × $${u}`,`$${u*k}`,u*k);
+    if(S.shape==="yes")add(`塑型 ${k}指 × $25`,`$${25*k}`,25*k);
+  }
+  if(S.shoot==="是")add("配合拍攝優惠","-$50",-50);
+  if(total<0)total=0;
+  const box=$("priceRows");box.innerHTML="";
+  if(!rows.length){box.textContent="請先選擇款式";}
+  rows.forEach(([l,v])=>{const d=document.createElement("div");d.className="prow";const a=document.createElement("span");a.textContent=l;const b=document.createElement("span");b.textContent=v;d.appendChild(a);d.appendChild(b);box.appendChild(d)});
+  $("priceTotal").textContent="$"+total.toLocaleString("en-US")+(up?"up":"");
+}
+["click","input","change"].forEach(ev=>document.addEventListener(ev,()=>setTimeout(calc,0)));
+calc();
 </script>
 </body>
 </html>
