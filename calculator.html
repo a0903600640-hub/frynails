@@ -32,19 +32,25 @@ select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--bd);back
 <div class="total"><div><small>總金額 (NT$)</small><br><button type="button" class="clr" onclick="clearAll()">一鍵清除</button></div><b id="tot">0</b></div>
 <div class="wrap">
 <h1>魚仔美甲 Fry Nails</h1><div class="sb">價格計算機・預設十指</div>
+
 <div class="card"><h2>美甲服務(擇一)</h2><div id="styles"></div>
 <div class="row" id="jumpRow"><label class="l"><input type="checkbox" id="jump"><span>跳色不限量<small>單色、貓眼璀璨、漸層適用</small></span></label><span class="p">+50</span></div></div>
+
 <div class="card"><h2>加購裝飾</h2><div id="deco"></div></div>
 <div class="card"><h2>其他服務</h2><div id="other"></div></div>
+
 <div class="card"><h2>卸甲服務</h2>
 <label class="row"><span class="l"><input type="radio" name="rm" value="none" checked><span>不卸甲</span></span><span class="p"></span></label><label class="row"><span class="l"><input type="radio" name="rm" value="150"><span>本店、續作</span></span><span class="p">150</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="300"><span>本店、不續做</span></span><span class="p">300</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="200"><span>他店、續作</span></span><span class="p">200</span></label><label class="row"><span class="l"><input type="radio" name="rm" value="400"><span>他店、不續做</span></span><span class="p">400</span></label>
 <div class="row" style="cursor:default"><span>卸大鑽、飾品、立體造型<small>75 / 手</small></span>
 <div class="step"><button onclick="hand(-1)">−</button><em id="hc">0</em><button onclick="hand(1)">+</button></div></div></div>
+
 <div class="card"><h2>優惠</h2>
 <label class="row"><span class="l"><input type="checkbox" id="w3"><span>三週內換甲免卸甲費</span></span><span class="p">免卸甲費</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="bday"><span>當月壽星優惠</span></span><span class="p">九折</span></label>
+<label class="row"><span class="l"><input type="checkbox" id="newc"><span>新客優惠</span></span><span class="p">九五折</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="ref"><span>介紹費</span></span><span class="p">−50</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="pic"><span>配合拍攝作品並同意發布於魚仔社群<small>即可享有優惠</small></span></span><span class="p">−50</span></label></div>
+
 <div class="card sum"><h2>明細</h2><div id="sum"></div></div>
 <div class="note">依價目表試算,實際金額以店家報價為準。「up」項目為起算價。</div>
 </div>
@@ -61,33 +67,33 @@ $("other").innerHTML=stepper(OTHER,"o")+`<label class="row"><span class="l"><inp
 function qty(k,d){q[k]=Math.max(0,Math.min(F,d==99?F:(q[k]||0)+d));calc()}
 function up(i,d){X[i]=Math.max(0,X[i]+d*50);document.querySelector(`input[name=st][value="${i}"]`).checked=true;calc()}
 function clearAll(){
-document.querySelectorAll('input[name=st]').forEach(e=>e.checked=false);
-document.querySelectorAll('input[type=checkbox]').forEach(e=>e.checked=false);
-document.querySelector('input[name=rm][value=none]').checked=true;
-q={};H=0;X={8:0,9:0};calc();window.scrollTo({top:0,behavior:"smooth"})}
+ document.querySelectorAll('input[name=st]').forEach(e=>e.checked=false);
+ document.querySelectorAll('input[type=checkbox]').forEach(e=>e.checked=false);
+ document.querySelector('input[name=rm][value=none]').checked=true;
+ q={};H=0;X={8:0,9:0};calc();window.scrollTo({top:0,behavior:"smooth"})}
 function hand(d){H=Math.max(0,Math.min(2,H+d));calc()}
 function calc(){
-const L=[];const add=(n,v)=>{if(v)L.push([n,v])};
-const si=document.querySelector('input[name=st]:checked');style=si?+si.value:-1;
-const S=STYLES[style];
-$("jumpRow").style.opacity=S&&S[2]?1:.4;
-for(const i in X)$("ux"+i).textContent=STYLES[i][1]+X[i];
-if(S){add(S[0]+(S[3]?"(起)":""),S[1]);if(S[2]&&$("jump").checked)add("跳色不限量",50);if(S[3])add("款式加價",X[style])}
-DECO.forEach((x,i)=>{const n=q["d"+i]||0;$("qd"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
-if($("stk").checked)add("貼紙不限量",50);
-OTHER.forEach((x,i)=>{const n=q["o"+i]||0;$("qo"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
-if($("thick").checked)add("厚建構",150);
-const rm=document.querySelector('input[name=rm]:checked').value;
-if(rm!="none"){const nm=document.querySelector('input[name=rm]:checked').parentNode.textContent.trim();
-if($("w3").checked)L.push(["卸甲費(三週內免)",0]);else add("卸甲 "+nm,+rm)}
-if(style===0&&(rm==="300"||rm==="400"))add("基礎保養 卸甲不續做優惠",-100);
-$("hc").textContent=H;add(`卸大鑽/飾品/立體 × ${H}手`,H*75);
-if($("bday").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("當月壽星九折",-Math.round(sub*0.1))}
-if($("ref").checked)add("介紹費",-50);
-if($("pic").checked)add("拍攝發布優惠",-50);
-const t=Math.max(0,L.reduce((a,b)=>a+b[1],0));
-$("tot").textContent=t.toLocaleString();
-$("sum").innerHTML=L.length?L.map(x=>`<div><span>${x[0]}</span><span>${x[1]<0?"−":""}${Math.abs(x[1])}</span></div>`).join("")+`<div style="border-top:1px solid var(--bd);margin-top:4px;padding-top:8px;font-weight:700"><span>合計</span><span>${t}</span></div>`:`<div class="n">尚未選擇項目</div>`;
+ const L=[];const add=(n,v)=>{if(v)L.push([n,v])};
+ const si=document.querySelector('input[name=st]:checked');style=si?+si.value:-1;
+ const S=STYLES[style];
+ $("jumpRow").style.opacity=S&&S[2]?1:.4;
+ for(const i in X)$("ux"+i).textContent=STYLES[i][1]+X[i];
+ if(S){add(S[0]+(S[3]?"(起)":""),S[1]);if(S[2]&&$("jump").checked)add("跳色不限量",50);if(S[3])add("款式加價",X[style])}
+ DECO.forEach((x,i)=>{const n=q["d"+i]||0;$("qd"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
+ if($("stk").checked)add("貼紙不限量",50);
+ OTHER.forEach((x,i)=>{const n=q["o"+i]||0;$("qo"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
+ if($("thick").checked)add("厚建構",150);
+ const rm=document.querySelector('input[name=rm]:checked').value;
+ if(rm!="none"){const nm=document.querySelector('input[name=rm]:checked').parentNode.textContent.trim();
+  if($("w3").checked)L.push(["卸甲費(三週內免)",0]);else add("卸甲 "+nm,+rm)}
+ $("hc").textContent=H;add(`卸大鑽/飾品/立體 × ${H}手`,H*75);
+ if($("bday").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("當月壽星九折",-Math.round(sub*0.1))}
+ if($("newc").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("新客九五折",-Math.round(sub*0.05))}
+ if($("ref").checked)add("介紹費",-50);
+ if($("pic").checked)add("拍攝發布優惠",-50);
+ const t=Math.max(0,L.reduce((a,b)=>a+b[1],0));
+ $("tot").textContent=t.toLocaleString();
+ $("sum").innerHTML=L.length?L.map(x=>`<div><span>${x[0]}</span><span>${x[1]<0?"−":""}${Math.abs(x[1])}</span></div>`).join("")+`<div style="border-top:1px solid var(--bd);margin-top:4px;padding-top:8px;font-weight:700"><span>合計</span><span>${t}</span></div>`:`<div class="n">尚未選擇項目</div>`;
 }
 document.addEventListener("change",calc);calc();
 </script></body></html>
