@@ -3,99 +3,118 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>fry._.nails_ | 客製美甲</title>
-<meta name="description" content="fry._.nails_ 客製美甲，預約與社群連結">
-<meta property="og:title" content="fry._.nails_ | 客製美甲">
-<meta property="og:image" content="link-photo1.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#e4edf5">
+<title>fry._.nails_ | 魚仔美甲 Fry Nails</title>
+<meta name="description" content="魚仔美甲 Fry Nails：您的專屬指尖魔法師，預約、價目表、作品集與社群連結">
+<meta property="og:title" content="魚仔美甲 Fry Nails">
+<meta property="og:image" content="link-banner.jpg">
 <style>
-:root{
-  --ink:#2b3a52; --ink-soft:#5d6c85; --glass:rgba(255,255,255,.55);
-  --edge:rgba(255,255,255,.9); --accent:#7f93bd;
-}
-*{box-sizing:border-box;margin:0}
-html{height:100%}
-body{
-  min-height:100%;color:var(--ink);
-  font-family:"Noto Serif TC","PingFang TC","Microsoft JhengHei",serif;font-weight:300;
-  background:#e9eef5 url("link-bg.jpg") center top/cover no-repeat fixed;
-  padding:max(48px,env(safe-area-inset-top)) 20px max(40px,env(safe-area-inset-bottom));
-}
-main{max-width:460px;margin:0 auto;text-align:center}
-h1{
-  font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;
-  font-size:clamp(2.4rem,11vw,3.2rem);letter-spacing:.02em;line-height:1.1;
-}
-.bio{margin:12px 0 32px;color:var(--ink-soft);font-size:.95rem;letter-spacing:.12em}
-
-.links{display:grid;gap:12px;list-style:none;padding:0}
-.links a{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 22px;border-radius:999px;text-decoration:none;color:var(--ink);
-  background:var(--glass);border:1px solid var(--edge);
-  backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
-  box-shadow:0 6px 24px rgba(110,135,175,.16), inset 0 1px 0 rgba(255,255,255,.8);
-  font-size:1.02rem;letter-spacing:.08em;
-  transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
-}
-.links a small{font-size:.78rem;color:var(--ink-soft);letter-spacing:.04em}
-.links a:hover,.links a:focus-visible{transform:translateY(-2px);background:rgba(255,255,255,.8);box-shadow:0 10px 28px rgba(110,135,175,.28)}
-.links a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.links .book a{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:0 8px 26px rgba(43,58,82,.35)}
-.links .book a small{color:#cfd8ea}
-.links .book a:hover{background:#1f2c42}
-
-h2{font-weight:400;font-size:1rem;letter-spacing:.2em;margin:44px 0 14px;color:var(--ink-soft)}
-.works{
-  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
-  margin:0 -20px;padding:4px 20px 16px;scrollbar-width:none;
-}
-.works::-webkit-scrollbar{display:none}
-.works img{
-  flex:0 0 68%;max-width:290px;aspect-ratio:3/4;object-fit:cover;scroll-snap-align:center;
-  border-radius:22px;border:1px solid var(--edge);
-  box-shadow:0 10px 28px rgba(110,135,175,.25);background:#dfe6f0;
-}
-footer{margin-top:28px;font-size:.78rem;color:var(--ink-soft);letter-spacing:.1em}
-
-.intro{animation:rise .9s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.intro{animation:none}.links a{transition:none}}
+:root{--tx:#1f3a5c;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{background:#e4edf5;color-scheme:light only}
+body{margin:0;min-height:100vh;background:transparent;color:var(--tx);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;background:#e4edf5 url("link-bg3.jpg") center top/cover no-repeat;z-index:-1}
+img{display:block;max-width:100%}
+.page{max-width:560px;margin:0 auto}
+.banner{width:100%;-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 100%);mask-image:linear-gradient(to bottom,#000 58%,transparent 100%)}
+.tagline{margin:-4px 0 0;padding:0 18px;text-align:center;font-size:clamp(17px,4.8vw,22px);font-weight:600;letter-spacing:.06em;line-height:1.7}
+.tagline span{display:block}
+.tagline .l2{padding-left:2.2em}
+.strip{display:flex;gap:10px;padding:0 6px;margin:26px 0 0}
+.strip i{flex:1;height:22px;border-radius:999px;background:#a5c5e6}
+.strip i:nth-child(even){background:#c8d1d9}
+h2{margin:8px 0 14px;text-align:center;font-size:20px;font-weight:700;letter-spacing:.12em}
+.links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;padding:0 16px}
+.links a{display:flex;align-items:center;justify-content:center;min-height:66px;padding:6px 4px;border:5px solid;border-radius:18px;text-decoration:none;font-size:clamp(14px,4vw,17px);font-weight:600;text-align:center;color:#1b1b1b;-webkit-tap-highlight-color:transparent}
+.links a:active{transform:scale(.97)}
+.links .b-book{background:#efe5bb;border-color:#cdb765}
+.links .b-line{background:#d3e9b2;border-color:#559a7a}
+.links .b-ig{border-color:transparent;background:linear-gradient(135deg,#f6bccb,#cba5f6) padding-box,linear-gradient(135deg,#f1aec2,#b78bff) border-box}
+.links .b-th{background:#545454;border-color:#000;color:#fff!important}
+.links .b-xhs{background:#ff9f9f;border-color:#ff3333}
+.links .b-fb{background:#7a89d9;border-color:#1a56b0;color:#fff!important}
+.pic{padding:0 16px}
+.pic img{width:100%;border-radius:14px;cursor:zoom-in}
+.note{margin:0 18px 14px;text-align:center;font-size:13px;font-weight:600}
+.cols{display:flex;gap:14px;padding:0 16px;align-items:flex-start}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+.col.r{margin-top:46px}
+.item img{width:100%;border-radius:10px;cursor:zoom-in}
+.item p{margin:6px 0 0;text-align:center;font-size:14px;font-weight:700}
+.cols.rev .col.r{margin-top:70px}
+.end{height:48px}
+#lb{position:fixed;top:0;left:0;right:0;bottom:0;z-index:20;background:rgba(20,34,52,.9);overflow:auto;padding:14px;cursor:zoom-out;-webkit-overflow-scrolling:touch}
+#lb img{width:100%;max-width:980px;margin:0 auto;border-radius:12px}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
-<main>
-  <header class="intro">
-    <h1>fry._.nails_</h1>
-    <p class="bio">客製美甲設計</p>
-  </header>
+<div class="page">
+<img class="banner" src="link-banner.jpg" alt="魚仔美甲 Fry Nails">
+<p class="tagline"><span>「您的專屬指尖魔法師</span><span class="l2">及時的客製化美甲服務」</span></p>
 
-  <ul class="links">
-    <li class="book"><a href="https://reurl.cc/0kyAa9" target="_blank" rel="noopener">線上預約 <small>選時段</small></a></li>
-    <li><a href="https://lin.ee/yFCCMxr" target="_blank" rel="noopener">LINE <small>詢問、聯絡</small></a></li>
-    <li><a href="https://www.instagram.com/fry._.nails_?stkn=MWFjbHFwbW5sbGdjcw%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram <small>最新作品</small></a></li>
-    <li><a href="https://www.threads.com/@fry._.nails_?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">Threads <small>日常分享</small></a></li>
-    <li><a href="https://www.facebook.com/profile.php?id=61592690425525" target="_blank" rel="noopener">Facebook <small>粉絲專頁</small></a></li>
-    <li><a href="https://xhslink.cn/m/1SKBDL183Ey" target="_blank" rel="noopener">小紅書 <small>作品筆記</small></a></li>
-  </ul>
+<div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h2>各類連結區</h2>
+<div class="links">
+  <a class="b-book" href="https://reurl.cc/0kyAa9" target="_blank" rel="noopener">預約表單</a>
+  <a class="b-line" href="https://lin.ee/yFCCMxr" target="_blank" rel="noopener">官方LINE</a>
+  <a class="b-ig" href="https://www.instagram.com/fry._.nails_?stkn=MWFjbHFwbW5sbGdjcw%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+  <a class="b-th" href="https://www.threads.com/@fry._.nails_?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">Threads</a>
+  <a class="b-xhs" href="https://xhslink.cn/m/1SKBDL183Ey" target="_blank" rel="noopener">小紅書</a>
+  <a class="b-fb" href="https://www.facebook.com/profile.php?id=61592690425525" target="_blank" rel="noopener">Facebook</a>
+</div>
 
-  <h2>作品</h2>
-  <div class="works" role="list" aria-label="美甲作品">
-    <img role="listitem" src="link-photo1.jpg" alt="薰衣草色立體花朵美甲" loading="lazy">
-    <img role="listitem" src="link-photo2.jpg" alt="焦糖棕暈染金線美甲" loading="lazy">
-    <img role="listitem" src="link-photo3.jpg" alt="珠光貝殼裸色美甲" loading="lazy">
-    <img role="listitem" src="link-photo4.jpg" alt="黑色蕾絲長甲" loading="lazy">
-    <img role="listitem" src="link-photo5.jpg" alt="黑白兔兔蝴蝶結美甲" loading="lazy">
-    <img role="listitem" src="link-photo6.jpg" alt="黑白蝴蝶銀箔美甲" loading="lazy">
-    <img role="listitem" src="link-photo7.jpg" alt="丹寧小熊星星美甲" loading="lazy">
-    <img role="listitem" src="link-photo8.jpg" alt="紫灰暈染大理石美甲" loading="lazy">
-    <img role="listitem" src="link-photo9.jpg" alt="巧克力棕貓眼美甲" loading="lazy">
-    <img role="listitem" src="link-photo10.jpg" alt="綠色光暈美甲" loading="lazy">
+<div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h2>常駐活動</h2>
+<div class="pic zoom"><img src="link-promo.jpg" alt="常駐優惠與集點卡"></div>
+
+<div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h2>價目表</h2>
+<div class="pic zoom"><img src="link-price.jpg" alt="魚仔美甲價目表"></div>
+
+<div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h2>作品集</h2>
+<p class="note">（以下價格僅為款式本身，若需其他如卸甲、延甲等服務，需另外計價。）</p>
+<div class="cols zoom">
+  <div class="col">
+    <div class="item"><img src="link-photo3.jpg" alt="珠光貝殼裸色美甲" loading="lazy"><p>款式價格：1150</p></div>
+    <div class="item"><img src="link-photo5.jpg" alt="黑白兔兔蝴蝶結美甲" loading="lazy"><p>款式價格：1500</p></div>
+    <div class="item"><img src="link-photo9.jpg" alt="巧克力棕貓眼美甲" loading="lazy"><p>款式價格：950</p></div>
+    <div class="item"><img src="link-photo2.jpg" alt="焦糖棕暈染金線美甲" loading="lazy"><p>款式價格：950</p></div>
+    <div class="item"><img src="link-photo10.jpg" alt="綠色光暈美甲" loading="lazy"><p>款式價格：1000</p></div>
   </div>
+  <div class="col r">
+    <div class="item"><img src="link-photo1.jpg" alt="薰衣草色立體花朵美甲" loading="lazy"><p>款式價格：1200</p></div>
+    <div class="item"><img src="link-photo4.jpg" alt="黑色蕾絲長甲" loading="lazy"><p>款式價格：1500</p></div>
+    <div class="item"><img src="link-photo6.jpg" alt="黑白蝴蝶銀箔美甲" loading="lazy"><p>款式價格：950</p></div>
+    <div class="item"><img src="link-photo7.jpg" alt="丹寧小熊星星美甲" loading="lazy"><p>款式價格：1000</p></div>
+    <div class="item"><img src="link-photo8.jpg" alt="紫灰暈染大理石美甲" loading="lazy"><p>款式價格：950</p></div>
+  </div>
+</div>
 
-  <footer>© fry._.nails_</footer>
-</main>
+<div class="strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<h2>客人好評</h2>
+<div class="cols rev zoom">
+  <div class="col">
+    <div class="item"><img src="link-review5.jpg" alt="客人好評：焦糖金線美甲" loading="lazy"></div>
+    <div class="item"><img src="link-review4.jpg" alt="客人好評：黑白系美甲" loading="lazy"></div>
+    <div class="item"><img src="link-review3.jpg" alt="客人好評：黑貓美甲" loading="lazy"></div>
+  </div>
+  <div class="col r">
+    <div class="item"><img src="link-review1.jpg" alt="客人好評：薄荷巧克力美甲" loading="lazy"></div>
+    <div class="item"><img src="link-review2.jpg" alt="客人好評：裸色美甲" loading="lazy"></div>
+  </div>
+</div>
+<div class="end"></div>
+</div>
+
+<div id="lb" hidden><img id="lbImg" alt=""></div>
+<script>
+document.querySelectorAll(".zoom img").forEach(function(im){
+  im.addEventListener("click",function(){document.getElementById("lbImg").src=im.src;document.getElementById("lb").hidden=false});
+});
+document.getElementById("lb").addEventListener("click",function(){this.hidden=true});
+</script>
 </body>
 </html>
