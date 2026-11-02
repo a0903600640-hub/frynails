@@ -42,6 +42,7 @@ select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--bd);back
 <div class="step"><button onclick="hand(-1)">−</button><em id="hc">0</em><button onclick="hand(1)">+</button></div></div></div>
 <div class="card"><h2>優惠</h2>
 <label class="row"><span class="l"><input type="checkbox" id="w3"><span>三週內換甲免卸甲費</span></span><span class="p">免卸甲費</span></label>
+<label class="row"><span class="l"><input type="checkbox" id="newc"><span>新客優惠<small>需主動告知；與壽星優惠擇一</small></span></span><span class="p">95折</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="bday"><span>當月壽星優惠</span></span><span class="p">九折</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="ref"><span>介紹費</span></span><span class="p">−50</span></label>
 <label class="row"><span class="l"><input type="checkbox" id="pic"><span>配合拍攝作品並同意發布於魚仔社群<small>即可享有優惠</small></span></span><span class="p">−50</span></label></div>
@@ -83,6 +84,7 @@ if(rm!="none"){const nm=document.querySelector('input[name=rm]:checked').parentN
 if($("w3").checked)L.push(["卸甲費(三週內免)",0]);else add("卸甲 "+nm,+rm)}
 if(style===0&&(rm==="300"||rm==="400"))add("基礎保養 卸甲不續做優惠",-100);
 $("hc").textContent=H;add(`卸大鑽/飾品/立體 × ${H}手`,H*75);
+if($("newc").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("新客優惠95折",-Math.round(sub*0.05))}
 if($("bday").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("當月壽星九折",-Math.round(sub*0.1))}
 if($("ref").checked)add("介紹費",-50);
 if($("pic").checked)add("拍攝發布優惠",-50);
@@ -90,5 +92,6 @@ const t=Math.max(0,L.reduce((a,b)=>a+b[1],0));
 $("tot").textContent=t.toLocaleString();
 $("sum").innerHTML=L.length?L.map(x=>`<div><span>${x[0]}</span><span>${x[1]<0?"−":""}${Math.abs(x[1])}</span></div>`).join("")+`<div style="border-top:1px solid var(--bd);margin-top:4px;padding-top:8px;font-weight:700"><span>合計</span><span>${t}</span></div>`:`<div class="n">尚未選擇項目</div>`;
 }
+document.addEventListener("change",function(e){if(e.target.id==="newc"&&e.target.checked)$("bday").checked=false;if(e.target.id==="bday"&&e.target.checked)$("newc").checked=false});
 document.addEventListener("change",calc);calc();
 </script></body></html>
