@@ -84,10 +84,11 @@ if(rm!="none"){const nm=document.querySelector('input[name=rm]:checked').parentN
 if($("w3").checked)L.push(["卸甲費(三週內免)",0]);else add("卸甲 "+nm,+rm)}
 if(style===0&&(rm==="300"||rm==="400"))add("基礎保養 卸甲不續做優惠",-100);
 $("hc").textContent=H;add(`卸大鑽/飾品/立體 × ${H}手`,H*75);
-if($("newc").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("新客優惠95折",-Math.round(sub*0.05))}
-if($("bday").checked){const sub=L.reduce((a,b)=>a+b[1],0);add("當月壽星九折",-Math.round(sub*0.1))}
 if($("ref").checked)add("介紹費",-50);
 if($("pic").checked)add("拍攝發布優惠",-50);
+{const sub=Math.max(0,L.reduce((x,y)=>x+y[1],0));
+if($("newc").checked)add("新客優惠95折（全部加減後再乘）",-Math.round(sub*0.05));
+if($("bday").checked)add("當月壽星九折（全部加減後再乘）",-Math.round(sub*0.1))}
 const t=Math.max(0,L.reduce((a,b)=>a+b[1],0));
 $("tot").textContent=t.toLocaleString();
 $("sum").innerHTML=L.length?L.map(x=>`<div><span>${x[0]}</span><span>${x[1]<0?"−":""}${Math.abs(x[1])}</span></div>`).join("")+`<div style="border-top:1px solid var(--bd);margin-top:4px;padding-top:8px;font-weight:700"><span>合計</span><span>${t}</span></div>`:`<div class="n">尚未選擇項目</div>`;
