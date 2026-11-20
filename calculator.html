@@ -51,13 +51,13 @@ select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--bd);back
 </div>
 <script>
 const STYLES=[["基礎保養",300],["透明凝膠",500],["單色",600,1],["貓眼、璀璨",650,1],["漸層",700,1],["腮紅、漸層貓眼",750,1],["腮紅貓眼",800,1],["鏡面、法式",850,1],["指定造型款",750,0,"起"],["不指定造型款",750,0,"起","可選色系、風格、預算"]];
-const DECO=[["半鑽",50],["滿鑽",100]];
+const DECO=[["半鑽",50],["滿鑽",100],["轉印貼紙",25]];
 const OTHER=[["斷甲補甲",35],["甲片延甲",65],["凝膠延甲",75],["塑形",25]];
 let F=10,H=0,X={8:0,9:0},q={},style=-1;
 const $=id=>document.getElementById(id);
 $("styles").innerHTML=STYLES.map((s,i)=>`<label class="row"><span class="l"><input type="radio" name="st" value="${i}"><span>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span></span>${s[3]?`<div class="step"><button type="button" onclick="up(${i},-1)">−</button><em id="ux${i}" style="min-width:52px;font-weight:700">${s[1]}</em><button type="button" onclick="up(${i},1)">+</button></div>`:`<span class="p">${s[1]}</span>`}</label>`).join("");
 const stepper=(a,k)=>a.map((x,i)=>`<div class="row" style="cursor:default"><span>${x[0]}<small>${x[1]} / 指</small></span><div class="step"><button onclick="qty('${k}${i}',-1)">−</button><em id="q${k}${i}">0</em><button onclick="qty('${k}${i}',1)">+</button><button class="all" onclick="qty('${k}${i}',99)">全指</button></div></div>`).join("");
-$("deco").innerHTML=stepper(DECO,"d")+`<label class="row"><span class="l"><input type="checkbox" id="stk"><span>貼紙不限量</span></span><span class="p">50</span></label><label class="row"><span class="l"><input type="checkbox" id="tstk"><span>轉印貼紙</span></span><span class="p">100</span></label>`;
+$("deco").innerHTML=stepper(DECO,"d")+`<label class="row"><span class="l"><input type="checkbox" id="stk"><span>貼紙不限量</span></span><span class="p">50</span></label>`;
 $("other").innerHTML=stepper(OTHER,"o")+`<label class="row"><span class="l"><input type="checkbox" id="thick"><span>厚建構</span></span><span class="p">150</span></label>`;
 function qty(k,d){q[k]=Math.max(0,Math.min(F,d==99?F:(q[k]||0)+d));calc()}
 function up(i,d){X[i]=Math.max(0,X[i]+d*50);document.querySelector(`input[name=st][value="${i}"]`).checked=true;calc()}
@@ -76,7 +76,6 @@ for(const i in X)$("ux"+i).textContent=STYLES[i][1]+X[i];
 if(S){add(S[0]+(S[3]?"(起)":""),S[1]);if(S[2]&&$("jump").checked)add("跳色不限量",50);if(S[3])add("款式加價",X[style])}
 DECO.forEach((x,i)=>{const n=q["d"+i]||0;$("qd"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
 if($("stk").checked)add("貼紙不限量",50);
-if($("tstk").checked)add("轉印貼紙",100);
 OTHER.forEach((x,i)=>{const n=q["o"+i]||0;$("qo"+i).textContent=n;add(`${x[0]} × ${n}指`,n*x[1])});
 if($("thick").checked)add("厚建構",150);
 const rm=document.querySelector('input[name=rm]:checked').value;
